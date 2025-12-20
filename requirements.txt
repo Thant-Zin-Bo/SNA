@@ -1,0 +1,23 @@
+# --- Core Data Processing ---
+pandas>=2.0.0       # Handling the massive CSVs and timestamps
+numpy>=1.24.0       # Mathematical operations for metrics
+
+# --- RQ1 & RQ3: Network Analysis ---
+networkx>=3.1       # Graph construction, centrality, and path length metrics
+python-louvain>=0.16 # The 'community' library for Modularity and partitioning
+scipy>=1.10.0       # Required for sparse matrix operations in NetworkX
+
+# --- RQ2: Semantic Analysis (NLP) ---
+gensim>=4.3.0       # The standard for LDA Topic Modeling
+spacy>=3.5.0        # Advanced text cleaning (Lemmatization) - faster than NLTK
+nltk>=3.8.1         # Backup for basic stopwords and tokenization
+scikit-learn>=1.2.0 # For TF-IDF and Jensen-Shannon Divergence calculations
+
+# --- Visualization & Reporting ---
+matplotlib>=3.7.0   # Basic plotting (bar charts, line graphs)
+seaborn>=0.12.0     # Statistical plotting (distributions, correlations)
+pyLDAvis>=3.4.0     # Interactive visualization for your LDA Topic Models
+
+# --- Utilities ---
+tqdm>=4.65.0        # Progress bars (Essential when processing 1M+ tweets)
+jupyterlab>=4.0.0   # To run your .ipynb notebooks
