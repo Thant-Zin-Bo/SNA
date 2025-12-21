@@ -2,7 +2,8 @@
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![NetworkX](https://img.shields.io/badge/NetworkX-3.1-green)
-![Status](https://img.shields.io/badge/Status-Phase%202%3A%20Graph%20Construction-orange)
+![FastText](https://img.shields.io/badge/FastText-Language%20Filter-yellow)
+![Status](https://img.shields.io/badge/Status-Phase%202%3A%20Data%20Preprocessing%20%26%20NLP-orange)
 
 ## 📌 Project Overview
 This project mathematically quantifies the structure of political polarization on Twitter during the 2020 US Presidential Election. Moving beyond simple descriptive statistics, we employ a **Multiplex Network Approach** to test specific social theories about how "Echo Chambers" and "Battlefields" emerge in digital discourse.
@@ -26,74 +27,28 @@ We contrast the **Trump Support Network** (Treatment) against the **Biden Suppor
 
 ```text
 ├── data/
-│   ├── raw/             # (Ignored) Original Kaggle CSVs
-│   ├── processed/       # Intermediate cleaned data
-│   └── graphs/          # .gexf files for Gephi visualization
+│   ├── raw/                       # Raw input CSVs (Local only)
+│   ├── processed/                 # Cleaned Data Output
+│   │   ├── *_lda_ready.csv        # Heavy Clean (No names/stopwords) for Topic Modeling
+│   │   ├── *_bert_ready.csv       # Light Clean (Full sentences) for Sentiment/BERT
+│   │   ├── *_bots_removed.csv     # Audit trail of removed bot accounts
+│   │   └── *_foreign_removed.csv  # Audit trail of non-English tweets
+│   └── graphs/                    # .gexf files for Gephi visualization
 ├── notebooks/
-│   ├── 01_eda.ipynb                # Feasibility checks & Power Law distribution
-│   └── 02_topology_comparison.ipynb # Graph construction & Metric calculation
+│   ├── 01_eda.ipynb               # Feasibility checks & Power Law distribution
+│   ├── 02_preprocessing.ipynb     # MASTER PIPELINE: FastText -> Bot Filter -> NLP Fork
+│   └── 03_topology.ipynb          # (Upcoming) Graph construction & Metrics
 ├── src/
-│   ├── eda.py              # Data loading & Feasibility logic
-│   ├── network_analysis.py # Graph building & Topology metrics
-│   └── text_analysis.py    # (Planned) LDA Topic Modeling
-└── requirements.txt     # Python dependencies
-🚀 Getting Started
-1. Clone the Repository
-Bash
-
-git clone [https://github.com/Thant-Zin-Bo/SNA.git](https://github.com/Thant-Zin-Bo/SNA.git)
+│   ├── eda.py                     # Data loading & Feasibility logic
+│   ├── preprocessing.py           # The Cleaning Engine (FastText, SpaCy, Bot Forensics)
+│   └── network_analysis.py        # Graph building & Topology metrics
+└── requirements.txt               # Python dependencies
+🚀 Methodology: The "Forked Pipeline"To ensure scientific rigor, we process data through a strict 4-Layer Filter before analysis.Layer 1: Global Language Filter (FastText)Technology: Facebook's FastText (lid.176.ftz).Action: Removes non-English tweets (Portuguese, Turkish, German) that confuse Topic Models.Performance: ~100x faster than langdetect.Layer 2: Noise & Bot FiltrationNoise: Removes duplicates and short text (< 4 words).Bot Forensics: Identifies statistical outliers (Top 0.5% by volume) who exhibit non-human behavior (>144 tweets/day). These are removed to prevent skewing network centrality (RQ1).Layer 3: Semantic "Kill Switch"Action: Recursively removes candidate names (donaldtrump, sleepyjoebiden, kamala) from the text.Why: For RQ2, we measure how they talk (framing), not who they talk about.Layer 4: The Output ForkPath A (LDA Ready): Heavy cleaning. Lemmatization (voting $\to$ vote), Stopword removal.Path B (BERT Ready): Light cleaning. Preserves sentence structure and punctuation for deep learning context.🛠 Getting Started1. Clone the RepositoryBashgit clone [https://github.com/Thant-Zin-Bo/SNA.git](https://github.com/Thant-Zin-Bo/SNA.git)
 cd SNA
-2. Set Up Environment
-It is recommended to use a virtual environment to manage dependencies.
-
-Mac / Linux:
-
-Bash
-
-python3 -m venv .venv
+2. Set Up EnvironmentIt is recommended to use a virtual environment.Mac / Linux:Bashpython3 -m venv .venv
 source .venv/bin/activate
-Windows:
-
-Bash
-
-python -m venv .venv
+Windows:Bashpython -m venv .venv
 .venv\Scripts\activate
-Install Requirements:
-
-Bash
-
-pip install -r requirements.txt
+Install Requirements:Bashpip install -r requirements.txt
 python -m spacy download en_core_web_sm
-3. Download Data
-⚠️ Note: The dataset is not included in this repo due to size constraints (GitHub limit 100MB).
-
-Download the US Election 2020 Tweets dataset from Kaggle.
-
-Create a folder named data/raw/.
-
-Place the following files inside:
-
-hashtag_donaldtrump.csv
-
-hashtag_joebiden.csv
-
-4. Run Analysis
-Step 1: Open notebooks/01_eda.ipynb to verify data quality and check for "Giant Components."
-
-Step 2: Open notebooks/02_topology_comparison.ipynb to run the Modularity calculation and export graphs for Gephi.
-
-📊 Methodology & Tools
-Edge Extraction: Custom Regex parsing (in src/eda.py) to separate RT @User (Endorsement) from @User (Discussion).
-
-Graph Theory: NetworkX for calculating Modularity (Louvain method) and Density.
-
-NLP: Gensim for LDA Topic Modeling.
-
-Visualization: Gephi (ForceAtlas2 layout) will be used for final network maps.
-
-👥 Contributors
-Thant Zin Bo - Data Engineering & Topology Analysis
-
-[Abhinav Ramalingam] - 
-
-[Moutushi Sen] - 
+3. Run AnalysisEnsure your raw data files (hashtag_donaldtrump.csv, hashtag_joebiden.csv) are located in data/raw/.Step 1: PreprocessingOpen notebooks/02_preprocessing.ipynb. This notebook runs the full pipeline:Detects and removes foreign languages.Audits and removes Bots.Splits data into lda_ready and bert_ready formats.Step 2: Topology (Next Phase)Open notebooks/03_topology.ipynb (Coming soon) to run Modularity calculations.👥 ContributorsThant Zin Bo - Data Engineering & Topology Analysis[Abhinav Ramalingam] -[Moutushi Sen] -
