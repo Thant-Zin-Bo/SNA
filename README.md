@@ -51,4 +51,10 @@ Windows:Bashpython -m venv .venv
 .venv\Scripts\activate
 Install Requirements:Bashpip install -r requirements.txt
 python -m spacy download en_core_web_sm
-3. Run AnalysisEnsure your raw data files (hashtag_donaldtrump.csv, hashtag_joebiden.csv) are located in data/raw/.Step 1: PreprocessingOpen notebooks/02_preprocessing.ipynb. This notebook runs the full pipeline:Detects and removes foreign languages.Audits and removes Bots.Splits data into lda_ready and bert_ready formats.Step 2: Topology (Next Phase)Open notebooks/03_topology.ipynb (Coming soon) to run Modularity calculations.👥 ContributorsThant Zin Bo - Data Engineering & Topology Analysis[Abhinav Ramalingam] -[Moutushi Sen] -
+3. Run AnalysisEnsure your raw data files (hashtag_donaldtrump.csv, hashtag_joebiden.csv) are located in data/raw/.
+Step 1: PreprocessingOpen notebooks/02_preprocessing.ipynb. This notebook runs the full pipeline:Detects and removes foreign languages.Audits and removes Bots.Splits data into lda_ready and bert_ready formats.
+Step 2: Topology (Next Phase)Open notebooks/03_topology.ipynb (Coming soon) to run Modularity calculations.
+
+👥 ContributorsThant Zin Bo - Data Engineering & Topology Analysis
+[Abhinav Ramalingam] -
+[Moutushi Sen] -
