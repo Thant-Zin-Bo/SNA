@@ -43,7 +43,15 @@ We contrast the **Trump Support Network** (Treatment) against the **Biden Suppor
 │   ├── preprocessing.py           # The Cleaning Engine (FastText, SpaCy, Bot Forensics)
 │   └── network_analysis.py        # Graph building & Topology metrics
 └── requirements.txt               # Python dependencies
-🚀 Methodology: The "Forked Pipeline"To ensure scientific rigor, we process data through a strict 4-Layer Filter before analysis.Layer 1: Global Language Filter (FastText)Technology: Facebook's FastText (lid.176.ftz).Action: Removes non-English tweets (Portuguese, Turkish, German) that confuse Topic Models.Performance: ~100x faster than langdetect.Layer 2: Noise & Bot FiltrationNoise: Removes duplicates and short text (< 4 words).Bot Forensics: Identifies statistical outliers (Top 0.5% by volume) who exhibit non-human behavior (>144 tweets/day). These are removed to prevent skewing network centrality (RQ1).Layer 3: Semantic "Kill Switch"Action: Recursively removes candidate names (donaldtrump, sleepyjoebiden, kamala) from the text.Why: For RQ2, we measure how they talk (framing), not who they talk about.Layer 4: The Output ForkPath A (LDA Ready): Heavy cleaning. Lemmatization (voting $\to$ vote), Stopword removal.Path B (BERT Ready): Light cleaning. Preserves sentence structure and punctuation for deep learning context.🛠 Getting Started1. Clone the RepositoryBashgit clone [https://github.com/Thant-Zin-Bo/SNA.git](https://github.com/Thant-Zin-Bo/SNA.git)
+🚀 Methodology: The "Forked Pipeline"To ensure scientific rigor, we process data through a strict 4-Layer Filter before analysis.
+Layer 1: Global Language Filter (FastText)Technology: Facebook's FastText (lid.176.ftz).Action: Removes non-English tweets (Portuguese, Turkish, German) that confuse Topic Models.Performance: ~100x faster than langdetect.
+Layer 2: Noise & Bot FiltrationNoise: Removes duplicates and short text (< 4 words).Bot Forensics: Identifies statistical outliers (Top 0.5% by volume) who exhibit non-human behavior (>144 tweets/day). These are removed to prevent skewing network centrality (RQ1).
+Layer 3: Semantic "Kill Switch"Action: Recursively removes candidate names (donaldtrump, sleepyjoebiden, kamala) from the text.Why: For RQ2, we measure how they talk (framing), not who they talk about.
+Layer 4: The Output ForkPath A (LDA Ready): Heavy cleaning. Lemmatization (voting $\to$ vote), Stopword removal.Path B (BERT Ready): Light cleaning. Preserves sentence structure and punctuation for deep learning context.
+
+🛠 Getting Started
+1. Clone the Repository
+Bash git clone [https://github.com/Thant-Zin-Bo/SNA.git](https://github.com/Thant-Zin-Bo/SNA.git)
 cd SNA
 2. Set Up EnvironmentIt is recommended to use a virtual environment.Mac / Linux:Bashpython3 -m venv .venv
 source .venv/bin/activate
@@ -52,7 +60,7 @@ Windows:Bashpython -m venv .venv
 Install Requirements:Bashpip install -r requirements.txt
 python -m spacy download en_core_web_sm
 3. Run AnalysisEnsure your raw data files (hashtag_donaldtrump.csv, hashtag_joebiden.csv) are located in data/raw/.
-Step 1: PreprocessingOpen notebooks/02_preprocessing.ipynb. This notebook runs the full pipeline:Detects and removes foreign languages.Audits and removes Bots.Splits data into lda_ready and bert_ready formats.
+Step 1: Preprocessing Open notebooks/02_preprocessing.ipynb. This notebook runs the full pipeline:Detects and removes foreign languages.Audits and removes Bots.Splits data into lda_ready and bert_ready formats.
 Step 2: Topology (Next Phase)Open notebooks/03_topology.ipynb (Coming soon) to run Modularity calculations.
 
 👥 ContributorsThant Zin Bo - Data Engineering & Topology Analysis
